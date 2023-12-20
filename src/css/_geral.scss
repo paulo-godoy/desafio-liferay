@@ -1,0 +1,75 @@
+.logo_custom {
+  align-items: center;
+  border-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 0.875rem;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  position: relative;
+  img {
+    max-width: 60px;
+    max-height: 60px;
+    object-fit: cover;
+  }
+}
+
+.pelicula {
+  background-color: rgba(0, 78, 76, 0.5);
+  z-index: 1000;
+}
+
+// #title-page {
+//   font-size: 24px;
+//   font-weight: bold;
+//   color: #333;
+//   text-align: center;
+// }
+
+// #category-page {
+//   font-size: 18px;
+//   font-weight: bold;
+//   color: #333;
+//   text-align: center;
+// }
+
+// #img-page {
+//   width: 100%;
+//   height: auto;
+//   margin: 0 auto;
+// }
+
+// #content-page {
+//   font-size: 16px;
+//   font-weight: normal;
+//   color: #333;
+// }
+
+// .container {
+//   /* Estilos para a classe .container */
+// }
+
+.saude {
+  background-color: green;
+  color: white;
+}
+
+.musculacao {
+  background-color: orange;
+  color: white;
+}
+
+.carros {
+  background-color: yellow;
+  color: black;
+}
+
+.futebol {
+  background-color: purple;
+  color: white;
+}
+
+.ciclismo {
+  background-color: #9370db;
+  color: black;
+}
