@@ -110,9 +110,10 @@
 <@liferay.control_menu />
 
 <div class="container-fluid position-relative" id="wrapper">
-	<header id="banner" role="banner">
-		<div id="heading">
-			<div aria-level="1" class="site-title" role="heading">
+	<header id="banner" role="banner" style="display: flex; justify-content: space-between; align-items: center; text-align: center;">
+		<!-- Logo, Nome do Site -->
+		<div id="heading" aria-level="1" class="site-title" role="heading" style="display: flex; align-items: center;">
+			<div>
 				<a class="${logo_css_class} logo_custom" href="${site_default_url}" title="<@liferay.language_format arguments="${site_name}" key="go-to-x" />">
 					<img alt="${logo_description}" height="${site_logo_height}" src="${site_logo}" width="${site_logo_width}" />
 				</a>
@@ -123,12 +124,14 @@
 					</span>
 				</#if>
 			</div>
+
+			
 		</div>
 
-		<#--  <div class="search-bar">
-            <liferay-theme:defineObjects />
-            <liferay-ui:search />
-        </div>  -->
+		<!-- Link Home -->
+			<#--  <a href="${site_default_url}" style="text-decoration: none; color: #333; margin-left: 10px;">
+				Home
+			</a>  -->
 
 		<#if !is_signed_in>
 			<a data-redirect="${is_login_redirect_required?string}" href="${sign_in_url}" id="sign-in" rel="nofollow">${sign_in_text}</a>
@@ -137,7 +140,14 @@
 		<#if has_navigation && is_setup_complete>
 			<#include "${full_templates_path}/navigation.ftl" />
 		</#if>
+
+		<!-- Barra de pesquisa -->
+		<div class="search-bar" style="width: 300px;">
+			<@liferay_portlet["runtime"] portletName="com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet" />
+		</div>
 	</header>
+
+
 
 	<section id="content">
 		<h2 class="hide-accessible sr-only" role="heading" aria-level="1">${htmlUtil.escape(the_title)}</h2>
