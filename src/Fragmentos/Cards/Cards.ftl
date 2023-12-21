@@ -1,32 +1,31 @@
 <div class="fragment_1">
   [#if configuration?? && configuration.numbersCards??]
     [#list 1..configuration.numbersCards as index]
-      <div class="card" style="width: 18rem; margin-bottom: 20px;">
-        <lfr-editable id="imagem-${index}" type="image">
-          <img src="" class="card-img-top" alt="...">
-        </lfr-editable>
-        
-        <div class="card-body">
-          <lfr-editable id="title-${index}" type="rich-text">
-            <span class="card-title">Título</span>
+      <div class="col-md-12"> <!-- Adicionando a classe col-md-12 aqui -->
+        <div class="card" style="margin-bottom: 20px; overflow: hidden;">
+          <lfr-editable id="imagem-${index}" type="image">
+            <img src="" class="card-img-top w-100" style="object-fit: cover;" alt="...">
           </lfr-editable>
           
-          <lfr-editable id="description-${index}" type="rich-text">
-            <span class="card-text">Descrição</span>
-          </lfr-editable>
-          
-          <lfr-editable id="button-${index}" type="link">
-            <a href="#" class="btn btn-lg bg-${configuration.buttonColor.cssClass} text-${configuration.buttonTextColor.cssClass}" >Botão</a>
-          </lfr-editable>
+          <div class="card-body">
+            <lfr-editable id="title-${index}" type="rich-text">
+              <span class="card-title">Título</span>
+            </lfr-editable>
+            
+            <lfr-editable id="description-${index}" type="rich-text">
+              <span class="card-text">Descrição</span>
+            </lfr-editable>
+            
+            <lfr-editable id="button-${index}" type="link">
+              <a href="#" class="btn btn-lg bg-${configuration.buttonColor.cssClass} text-${configuration.buttonTextColor.cssClass}" >Botão</a>
+            </lfr-editable>
+          </div>
         </div>
       </div>
     [/#list]
   [/#if]
 </div>
 
-<style>
-    padding: 20px;
-</style>
 
 <script>
     {
