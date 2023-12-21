@@ -1,4 +1,43 @@
 <#assign site_url = htmlUtil.escape(layout.getGroup().getDisplayURL(themeDisplay, !layout.isPublicLayout())) />
+
+<style>
+  <#assign categoryColors = {
+    'Futebol': {'color': '#FF6600', 'textColor': 'white'},
+    'Carros': {'color': '#FFA500', 'textColor': 'white'},
+    'Saude': {'color': '#7FFF00', 'textColor': 'white'},
+    'Musculacao': {'color': '#0000FF', 'textColor': 'white'},
+    'Ciclismo': {'color': '#808080', 'textColor': 'black'}
+  } />
+
+  <#list entries as curEntry>
+    <#assign categoryIdField = curEntry.getExpandoBridge().getAttribute('Category')!'' />
+    <#assign categories = curEntry.getCategories() />
+
+    <#list categories as category>
+      <#assign categoryName = category.getName()?trim?lower_case />
+      <#assign categoryInfo = categoryColors[categoryName]!{'color': '', 'textColor': ''} />
+
+      <#if categoryInfo.color?has_content>
+        <style>
+          .category-${categoryIdField} .content-category-text {
+            background: ${categoryInfo.color} !important;
+            color: ${categoryInfo.textColor} !important;
+            padding: 5px;
+          }
+        </style>
+      </#if>
+    </#list>
+  </#list>
+
+  <!-- Borda no estilo global -->
+  <style>
+    .content-category-text {
+      border: 1px solid black !important;
+      padding: 5px !important;
+    }
+  </style>
+</style>
+
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
   <ol class="carousel-indicators">
     <#if entries?has_content>
@@ -12,7 +51,10 @@
     <#if entries?has_content>
       <#list entries as curEntry>
         <#assign i = curEntry_index>
-        <div class="carousel-item <#if i == 0>active</#if>">
+        <#assign categoryIdField = curEntry.getExpandoBridge().getAttribute('Category')!'' />
+        <#assign categories = curEntry.getCategories() />
+
+        <div class="carousel-item category-${categoryIdField} <#if i == 0>active</#if>">
           <div class="col-md-12">
             <div class="content-block p-3">
               <#assign assetRenderer = curEntry.getAssetRenderer() />
@@ -46,6 +88,16 @@
                 <#assign content = contentValuesList[0].getValue().getString(locale) />
                 <p class="content-text mb-3">${content}</p>
               </#if>
+
+              <!-- Aqui exibe as categorias -->
+              <#if categories?has_content>
+                <p class="content-category mb-3">
+                  <#list categories as category>
+                    <span class="content-category-text">${category.getName()}</span>
+                    <#if category_has_next>,</#if>
+                  </#list>
+                </p>
+              </#if>
             </div>
           </div>
         </div>
@@ -61,3 +113,33 @@
     <span class="sr-only">Next</span>
   </a>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const categoryColors = {
+      'Futebol': { 'color': '#FF6600', 'textColor': 'white' },
+      'Carros': { 'color': '#FFA500', 'textColor': 'white' },
+      'Saude': { 'color': '#7FFF00', 'textColor': 'white' },
+      'Musculacao': { 'color': '#0000FF', 'textColor': 'white' },
+      'Ciclismo': { 'color': '#808080', 'textColor': 'black' }
+    };
+
+    const entries = document.querySelectorAll('.content-category-text');
+
+    entries.forEach(entry => {
+      const categories = entry.innerText.split(',');
+
+      categories.forEach(category => {
+        const trimmedCategory = category.trim();
+        const categoryInfo = categoryColors[trimmedCategory];
+
+        if (categoryInfo) {
+          entry.style.backgroundColor = categoryInfo.color;
+          entry.style.color = categoryInfo.textColor;
+          entry.style.padding = '5px';
+          entry.style.border = '1px solid black';
+        }
+      });
+    });
+  });
+</script>

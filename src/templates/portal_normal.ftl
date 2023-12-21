@@ -22,6 +22,83 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 	<@liferay_util["include"] page=top_head_include />
+	<script>
+        Liferay.on('allPortletsReady', function () {
+            var entryId = 123; // Substitua pelo ID da sua entrada
+
+            // Verifique se o objeto Liferay está definido e se a função está disponível
+            if (Liferay && Liferay.Util) {
+                // Faça uma chamada AJAX para obter as categorias do servidor
+                Liferay.Util.fetch(
+                    '<%=request.getAttribute("theme-display").getURLHome()%>/c/portal/json_service',
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+                        },
+                        body: 'p_p_id=YourPortletID_WAR_YourPortletID&' +
+                              'p_p_lifecycle=2&' +
+                              'p_p_state=normal&' +
+                              'p_p_mode=view&' +
+                              'p_p_resource_id=getCategories&' +
+                              'entryId=' + entryId
+                    }
+                ).then(function (response) {
+                    return response.json();
+                }).then(function (data) {
+                    // Sucesso ao obter categorias
+                    var categories = data.categories;
+
+                    // Sua lógica aqui para definir a cor com base nas categorias
+                    var categoryColorClass = "";
+
+                    for (var i = 0; i < categories.length; i++) {
+                        var category = categories[i];
+
+                        // Verifique a tag da categoria e atribua a classe correspondente
+                        if (category.name === "Saude") {
+                            categoryColorClass = "saude";
+                        } else if (category.name === "Musculacao") {
+                            categoryColorClass = "musculacao";
+                        } else if (category.name === "Carros") {
+                            categoryColorClass = "carros";
+                        } else if (category.name === "Futebol") {
+                            categoryColorClass = "futebol";
+                        } else if (category.name === "Ciclismo") {
+                            categoryColorClass = "ciclismo";
+                        }
+                    }
+
+                    // Agora você pode usar categoryColorClass conforme necessário
+                    console.log('Classe de cor:', categoryColorClass);
+                }).catch(function (error) {
+                    // Lidar com erros, se necessário
+                    console.error('Erro ao obter categorias:', error);
+                });
+            }
+        });
+    </script>
+	<style>
+		.saude {
+		background-color: #aaffaa;
+		}
+
+		.musculacao {
+			background-color: #ffaaff;
+		}
+
+		.carros {
+			background-color: #aaffff;
+		}
+
+		.futebol {
+			background-color: #ffffaa;
+		}
+
+		.ciclismo {
+			background-color: #ffaaaa;
+		}
+	</style>
 </head>
 
 <body class="${css_class}">
@@ -91,6 +168,7 @@
 <@liferay_util["include"] page=body_bottom_include />
 
 <@liferay_util["include"] page=bottom_include />
+
 
 </body>
 
